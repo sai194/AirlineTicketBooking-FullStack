@@ -1,0 +1,140 @@
+<h1>Flight Booking</h1>
+
+<div class="container">
+    <div class="alert alert-danger" *ngIf='searchError'>{{searchErrorMsg}}</div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="required">Destination From</label> <br />
+      <select name="fromCity" (change)="setFromCity($event.target.value)">
+        <option value=""></option>
+        <option *ngFor="let city of fromCityList" [ngValue]="city">{{
+          city
+        }}</option>
+      </select>
+      <br />
+      <br />
+      <label class="required">Departure Date</label>
+      <input
+        type="date"
+        style="width:200px;height: 25px;"
+        height="10" (change)="printDate($event.target.value)"
+        [ngModel]="departureDate | date: 'yyyy-MM-dd'"
+        (ngModelChange)="departureDate = $event"
+        class="form-control"
+        name="departureDate"
+      />
+      <br />
+      <label class="required"> Passenger </label> <br />
+      <select name="passenger" (change)="setPassengerCount($event.target.value)">
+          <option value=""></option>
+          <option *ngFor="let cnt of passengerCountList" [ngValue]="cnt">{{ cnt }}</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+      <label class="required">To </label> <br />
+      <select name="toCity" (change)="setToCity($event.target.value)">
+        <option value=""></option>
+        <option *ngFor="let city of toCityList" [ngValue]="city">{{
+          city
+        }}</option>
+      </select>
+      <br />
+      <br />
+      <label class="required">Time</label> <br />
+      <select name="timeHr" (change)="setTimeHr($event.target.value)">
+        <option value=""></option>
+        <option *ngFor="let hr of timeHrs" [ngValue]="hr">{{ hr }}</option>
+      </select>
+      <select name="timeMin" (change)="setTimeMin($event.target.value)">
+        <option value=""></option>
+        <option *ngFor="let min of timeMins" [ngValue]="min">{{ min }}</option>
+      </select>
+      <br />
+      <br />
+      <label class="required">Class </label> <br />
+      <select name="seatingClass" (change)="setSeatingClass($event.target.value)">
+          <option value=""></option>
+          <option *ngFor="let seating of seatingClassList" [ngValue]="seating">{{ seating }}</option>
+        </select>
+    </div>
+  </div>
+
+  <br />
+  <div>
+
+    <button (click)="searchFlights()" class="btn btn-success">
+      Search Flights
+    </button>
+  </div>
+  <br />
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th>Airlines</th>
+          <th>Departure Date</th>
+          <th>Departure Time</th>
+          <th>Arrival Time</th>
+          <th>Available Seats</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- for (Todo todo: todos) { -->
+        <tr *ngFor="let flight of flights">
+          <td><input type="checkbox" (change)="selection(flight, $event.target.value)"></td>
+          <td>{{ flight.airlines }}</td>
+          <td>{{ flight.departureDate | date | uppercase }}</td>
+          <td>{{ flight.hrs }}:{{ flight.mins }}</td>
+          <td>{{ flight.arrivalHrs }}:{{ flight.arrivalMins }}</td>
+          <td>{{ flight.passengerCount }}</td>
+          <td>{{ flight.price }}</td>
+        </tr>
+        <!-- } -->
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <div>
+    <button (click)="bookTicket()" class="btn btn-success">Book</button>
+  </div>
+  <br />
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th>Airlines</th>
+          <th>Departure Date</th>
+          <th>Departure Time</th>
+          <th>Arrival Time</th>
+          <th>Passengers</th>
+          <th>Price</th>
+          <th>Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- for (Todo todo: todos) { -->
+        <tr *ngFor="let ticket of tickets">
+            <td><input type="checkbox" (change)="selectionTickets(ticket, $event.target.value)"></td>
+          <td>{{ ticket.airlines }}</td>
+          <td>{{ ticket.departureDate | date | uppercase }}</td>
+          <td>{{ ticket.hrs }}:{{ ticket.mins }}</td>
+          <td>{{ ticket.arrivalHrs }}:{{ ticket.arrivalMins }}</td>
+          <td>{{ ticket.passengerCount }}</td>
+          <td>{{ ticket.price }}</td>
+          <td>{{ ticket.totalPrice }}</td>
+        </tr>
+        <!-- } -->
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <div>
+    <button (click)="cancelTicket()" class="btn btn-success">
+      Cancel Booking
+    </button>
+  </div>
+  <br />
+</div>

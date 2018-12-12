@@ -1,0 +1,6 @@
+body {
+  min-height: 800px;
+  margin-bottom: 100px;
+  clear: both;
+}
+.required:after { content:" *"; color: red }
